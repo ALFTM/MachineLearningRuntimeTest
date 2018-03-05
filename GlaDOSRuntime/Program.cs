@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace GlaDOSRuntime
 {
@@ -6,7 +8,12 @@ namespace GlaDOSRuntime
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            glaDOS();
+            Console.ReadKey();
         }
+
+        [DllImport("GlaDOS.dll")]
+        static extern int glaDOS();
+
     }
 }
