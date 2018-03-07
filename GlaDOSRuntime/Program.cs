@@ -107,9 +107,12 @@ namespace GlaDOSRuntime
                 -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
                 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 
+            double[] weights = new double[3];
+            IntPtr weightsPtr = perceptron(inputs, outputs, inputs.Length, 2);
 
-            perceptron(inputs, outputs, inputs.Length, 2);
+            Marshal.Copy(weightsPtr, weights, 0, 3);
 
+            freePtr(weightsPtr);
         }
 
         private static int Output(double[] weights, double x, double y)
@@ -123,7 +126,9 @@ namespace GlaDOSRuntime
         static extern int glaDOS();
 
         [DllImport("GlaDOS.dll")]
-        static extern int perceptron(double[] inputs, int[] outputs, int height, int width);
+        static extern IntPtr perceptron(double[] inputs, int[] outputs, int height, int width);
 
+        [DllImport("GlaDOS.dll")]
+        static extern void freePtr(IntPtr weights);
     }
 }
